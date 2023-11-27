@@ -1,5 +1,5 @@
 # Geliştirici: M. Selcuk akbas
-# Tarih: 24-28 Kasım 2023
+# Tarih: 24-28... Kasım 2023
 # Açıklama:Bu kodu bilgisayarda yapılabilecek küçük optimizasyonları otamatik yapması için geliştirdim
 import tkinter as tk
 from tkinter import messagebox , ttk
@@ -40,10 +40,9 @@ def guncelleme_yukle():
     output_lines = result.stdout.splitlines()
     updated_packages = [line for line in output_lines if line.startswith("Updated ")]
     num_updated_packages = len(updated_packages)
-
+    
     bekle(700, messagebox.showinfo, "Bilgi", f"{num_updated_packages} paket güncellendi.")
     gizle_progress_bar()  # Progress bar'ı gizle
-    gizle_progress_bar()  # Progress bar'ı gizle  
 #alttaki fonksiyon powercfg komutu ile güç planı değiştiriyor
 def guc_planı(plan_ayarları):
     command = f'powercfg -setactive {plan_ayarları}'
@@ -60,13 +59,13 @@ def guc_ayarlarını_goster():
 #alttaki fonksiyon uzun süren ayarları(güncelleme ve internet gibi) arka planda yapya yarayan basit bir ayar sağlıyo
 def arkaplanda_calistir(fonksiyon, *args):
     threading.Thread(target=fonksiyon, args=args).start()
-    
+#alttaki fonksiyon  Progress barı kullanılmadığı zaman gizliyor    
 def gizle_progress_bar():
     progress_bar.grid_forget()
-
+#alttaki fonksiyon  Progress barı kullanıldığında gösteriyor
 def goster_progress_bar():
     progress_bar.grid(row=3, column=0, columnspan=2, pady=(0, 20))
-#########################################################################################################
+############################# PENCERE ,  BUTON , VE YERLEŞİM ŞEKLİ  ###########################################
 pencere = tk.Tk()
 pencere.title("Sorun Çözücü")
 pencere.geometry("400x390")
