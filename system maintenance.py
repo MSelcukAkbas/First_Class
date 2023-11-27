@@ -8,16 +8,17 @@ import threading
 #alttaki fonksiyon geri bildirim vermeden önce bekleme sağlıyor 
 def bekle(milisaniye, fonksiyon, *args, **kwargs):
     pencere.after(milisaniye, lambda: fonksiyon(*args, **kwargs))
-#alttaki fonksiyon bir dizi ipconfig komutu ile ağ ayarlarını optimize ediyor
+    #alttaki fonksiyon bir dizi ipconfig komutu ile ağ ayarlarını optimize ediyor
 def internet_ayarı():
+    goster_progress_bar()  # Progress bar'ı göster
     commands = [
         ['cmd', '/c', 'ipconfig', '/flushdns'],
         ['cmd', '/c', 'ipconfig', '/release'],
         ['cmd', '/c', 'ipconfig', '/renew']
     ]
-    
+
     success_message = "İşlem başarıyla tamamlandı."
-    
+
     progress_bar['maximum'] = len(commands)
 
     for idx, command in enumerate(commands, start=1):
@@ -27,17 +28,22 @@ def internet_ayarı():
 
         if result.returncode != 0:
             messagebox.showerror("Hata", f"{command} çalıştırılırken bir hata oluştu.")
+            gizle_progress_bar()  # Progress bar'ı gizle
             return
 
     bekle(700, messagebox.showinfo, "Başarı", success_message)
+    gizle_progress_bar()  # Progress bar'ı gizle
 #alttaki fonksiyon winget komutu ile güncellemeri kontrol edip yüklüyor
 def guncelleme_yukle():
+    goster_progress_bar()  # Progress bar'ı göster
     result = subprocess.run(['winget', 'upgrade', '--all'], capture_output=True, text=True)
     output_lines = result.stdout.splitlines()
     updated_packages = [line for line in output_lines if line.startswith("Updated ")]
     num_updated_packages = len(updated_packages)
-    
-    bekle(700, messagebox.showinfo, "Bilgi", f"{num_updated_packages} paket güncellendi.")    
+
+    bekle(700, messagebox.showinfo, "Bilgi", f"{num_updated_packages} paket güncellendi.")
+    gizle_progress_bar()  # Progress bar'ı gizle
+    gizle_progress_bar()  # Progress bar'ı gizle  
 #alttaki fonksiyon powercfg komutu ile güç planı değiştiriyor
 def guc_planı(plan_ayarları):
     command = f'powercfg -setactive {plan_ayarları}'
@@ -54,6 +60,12 @@ def guc_ayarlarını_goster():
 #alttaki fonksiyon uzun süren ayarları(güncelleme ve internet gibi) arka planda yapya yarayan basit bir ayar sağlıyo
 def arkaplanda_calistir(fonksiyon, *args):
     threading.Thread(target=fonksiyon, args=args).start()
+    
+def gizle_progress_bar():
+    progress_bar.grid_forget()
+
+def goster_progress_bar():
+    progress_bar.grid(row=3, column=0, columnspan=2, pady=(0, 20))
 #########################################################################################################
 pencere = tk.Tk()
 pencere.title("Sorun Çözücü")
@@ -84,7 +96,7 @@ normal_guc_tuşu.pack(pady=5)
 guc_ayar_cercevesi.pack_forget()
 #####################################################################
 progress_bar = ttk.Progressbar(pencere, orient="horizontal", length=200, mode="determinate")
-progress_bar.grid(row=3, column=0, columnspan=2, pady=(0, 20))
+gizle_progress_bar()
 #####################################################################
 pencere.mainloop()
 #########################################################################################################
