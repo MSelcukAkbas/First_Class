@@ -1,4 +1,6 @@
-#
+# Geliştirici: M. Selcuk akbas
+# Tarih: 24-28 Kasım 2023
+# Açıklama:Bu kodu bilgisayarda yapılabilecek küçük optimizasyonları otamatik yapması için geliştirdim
 import tkinter as tk
 from tkinter import messagebox , ttk
 import subprocess
