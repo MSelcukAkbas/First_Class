@@ -1,0 +1,60 @@
+import multiprocessing
+import subprocess
+import time
+import tkinter as tk
+
+def sonsuzdöngüler1():
+    while True:
+        sayılar = range(1, 10000, 1)
+        print(list(sayılar))
+
+def sonsuzdöngüler2():
+    while True:
+        sayılar = range(1, 100, 2)
+        print(list(sayılar))
+
+def sonsuzdöngüler3():
+    while True:
+        sayılar = range(1, 100, 3)
+        print(list(sayılar))
+
+def sonsuzdöngüler4():
+    while True:
+        sayılar = range(1, 100, 4)
+        print(list(sayılar))
+
+def siniriyoket():
+    while True:
+        sinirsizuygulama1 = r"C:\Windows\System32\notepad.exe"
+        subprocess.run([sinirsizuygulama1])
+
+def siniriyoket2():
+    while True:
+        sinirsizuygulama1 = r"C:\Windows\System32\control.exe"
+        subprocess.run([sinirsizuygulama1])
+
+def siniriyoket3():
+    while True:
+        sinirsizuygulama1 = r"C:\Windows\System32\dxdiag.exe"
+        subprocess.run([sinirsizuygulama1])
+
+def start_processes():
+    with multiprocessing.Pool(processes=7) as pool:
+        pool.apply_async(sonsuzdöngüler1)
+        pool.apply_async(sonsuzdöngüler2)
+        pool.apply_async(sonsuzdöngüler3)
+        pool.apply_async(sonsuzdöngüler4)
+        pool.apply_async(siniriyoket)
+        pool.apply_async(siniriyoket2)
+        pool.apply_async(siniriyoket3)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+
+    start_button = tk.Button(root, text="Start Processes", command=start_processes)
+    start_button.pack()
+
+    stop_button = tk.Button(root, text="Stop Processes", command=root.destroy)
+    stop_button.pack()
+
+    root.mainloop()
