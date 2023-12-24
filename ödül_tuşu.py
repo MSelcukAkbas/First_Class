@@ -10,7 +10,7 @@ pencere = tk.Tk() # burda pencere açıyoruz
 def fotoğrafkazıma():
     url = "https://i.pinimg.com/originals/e5/27/2c/e5272c6d803c00e3f97db3c5988bc857.jpg" 
     cevap = requests.get(url)
-    img = Image.open(BytesIO(cevap.content))                              #burası zordu ; fotoğrafı internettten alıp pencere içine yerleştiriyor
+    img = Image.open(BytesIO(cevap.content))  #burası zordu ; fotoğrafı internettten alıp pencere içine yerleştiriyor
     tk_img = ImageTk.PhotoImage(img)
 
     image_label = tk.Label(pencere, image=tk_img)
@@ -37,7 +37,8 @@ def oneLar():
 
     def sevenLer():
         tuş2 = tk.Button(pencere, text="tuş2", command=lambda: tuş2.place_forget())
-        tuş3 = tk.Button(pencere, text="tuş3", command=lambda: [tuş3.place_forget(), fotoğrafkazıma() ,iyibildiri() ]) # köşeli parantez ile listeleyerek fonksiyon çağırıyor
+        tuş3 = tk.Button(pencere, text="tuş3", command=lambda: [tuş3.place_forget(), fotoğrafkazıma() ,iyibildiri() ])
+        # köşeli parantez ile listeleyerek fonksiyon çağırıyor
         tuş4 = tk.Button(pencere, text="tuş4", command=lambda: tuş4.place_forget())
         tuş5 = tk.Button(pencere, text="tuş5", command=lambda: tuş5.place_forget())
         tuş6 = tk.Button(pencere, text="tuş6", command=lambda: [tuş6.place_forget(), kötübildiri()])
